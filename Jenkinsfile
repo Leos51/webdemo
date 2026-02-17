@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "leos51/webDemo"
+        registry = "leos51/webdemo"
         registryCredential = "dockerhub-credentials"
     }
 
