@@ -6,18 +6,24 @@ services:
       MYSQL_DATABASE: springboot
 
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
       - app-net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - 8080:80
     depends_on:
@@ -34,7 +40,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springboot
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/springboot
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
