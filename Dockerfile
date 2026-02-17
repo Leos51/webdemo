@@ -17,7 +17,7 @@ FROM tomcat:10.1-jdk21-temurin-jammy
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copier le WAR depuis le stage de build
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build /app/target/*.jar /usr/local/tomcat/webapps/ROOT.jar
 
 # Exposer le port
 EXPOSE 8080
