@@ -44,7 +44,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8081:8080"
+      - "8081:9090"
     networks:
       - app-net
     healthcheck:
@@ -61,7 +61,7 @@ services:
       api:
         condition: service_healthy
     environment:
-      API_URL: http://api:8080
+      API_URL: http://api:9090
     ports:
       - "8080:8080"
     networks:
