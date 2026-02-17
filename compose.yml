@@ -27,7 +27,7 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - 8082:80
+      - 9090:80
     depends_on:
       - mysql
     networks:
@@ -46,7 +46,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8081:9090"
+      - "9091:9090"
     networks:
       - app-net
     healthcheck:
@@ -65,7 +65,7 @@ services:
     environment:
       API_URL: http://api:9090
     ports:
-      - "8083:8080"
+      - "9092:8080"
     networks:
       - app-net
 
