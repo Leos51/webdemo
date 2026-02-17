@@ -31,7 +31,7 @@ services:
     image: leos51/api:latest
     container_name: spring-api
     depends_on:
-      mysql:
+      db:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springboot
