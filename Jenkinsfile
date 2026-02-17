@@ -3,7 +3,6 @@ pipeline {
     environment {
         registry = "leos51/webDemo"
         registryCredential = "dockerhub-credentials"
-        dockerImage = ''
     }
 
     tools {
@@ -44,7 +43,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                          docker.image('leos51/webdemo:latest').push()
                     }
                 }
