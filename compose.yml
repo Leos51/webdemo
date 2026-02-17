@@ -14,7 +14,7 @@ services:
     networks:
       - app-net
     healthcheck:
-      test: [ "CMD-SHELL", "mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1 FROM springboot.user LIMIT 1;' || exit 1" ]
+      test: [ "CMD-SHELL", "mysql -u ${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1 FROM springboot.user LIMIT 1;' || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -66,7 +66,7 @@ services:
     environment:
       API_URL: http://api:9090
     ports:
-      - "${WEB_PORT:-9092}:8080"
+      - "${WEB_PORT:-9092}:9001"
     networks:
       - app-net
 

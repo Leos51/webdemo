@@ -16,7 +16,7 @@ WORKDIR /app
 # Copier le JAR depuis le stage de build
 COPY --from=build /app/target/*.jar app.jar
 
-EXPOSE 8080
+EXPOSE 9001
 
 # Lancer le JAR Spring Boot directement
 ENTRYPOINT ["java", "-jar", "app.jar"]
