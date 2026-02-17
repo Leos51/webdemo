@@ -31,11 +31,11 @@ pipeline {
                echo 'build maven'
             }
         }
-        stage('Generate allure Report') {
-            steps {
-                bat 'mvn allure:report'
-            }
-        }
+//         stage('Generate allure Report') {
+//             steps {
+//                 bat 'mvn allure:report'
+//             }
+//         }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -62,15 +62,15 @@ pipeline {
             }
         }
     }
-//     post {
-//         always {
-//             allure([
-//                 includeProperties: false,
-//                 jdk: '',
-//                 properties: [],
-//                 reportBuildPolicy: 'ALWAYS',
-//                 results: [[path: 'target/allure-results']]
-//             ])
-//         }
-//     }
+    post {
+        always {
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+            ])
+        }
+    }
 }
