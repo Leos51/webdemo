@@ -1,0 +1,68 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: springboot
+
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    networks:
+      - app-net
+
+
+  # API Spring Boot
+  api:
+    image: leos51/api:latest
+    container_name: spring-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springboot
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8081:8080"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/persons" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  # Application Web
+  web:
+    image: leos51/webdemo:latest
+    container_name: webdemo-app
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      API_URL: http://api:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+
+volumes:
+  mysql-data:
+networks:
+  app-network:
+    driver: bridge
