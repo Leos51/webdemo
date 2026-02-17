@@ -12,7 +12,7 @@ services:
       - mysql-data:/var/lib/mysql
       - ./infra/mysql/dump/script.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - app-net
+      - backend-net
     healthcheck:
       test: [ "CMD-SHELL", "mysql -u ${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1 FROM springboot.user LIMIT 1;' || exit 1" ]
       interval: 10s
@@ -31,7 +31,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - app-net
+      - backend-net
 
 
   # API Spring Boot
@@ -48,7 +48,8 @@ services:
     ports:
       - "${API_PORT:-9090}:9090"
     networks:
-      - app-net
+      - backend-net
+      - frontend-net
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:9090/persons || exit 1"]
       interval: 15s
@@ -68,11 +69,13 @@ services:
     ports:
       - "${WEB_PORT:-9092}:9001"
     networks:
-      - app-net
+      - frontend-net
 
 
 volumes:
   mysql-data:
 networks:
-  app-net:
+  frontend-net:
+    driver: bridge    # web ←→ api
+  backend-net:
     driver: bridge
