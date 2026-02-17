@@ -1,18 +1,20 @@
 services:
-  db:
+  # Base de données MySQL
+  mysql:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: springboot
 
     ports:
-      - 3307:3306
+      - 3306:3306
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./infra/mysql/dump/script.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-net
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: [ "CMD-SHELL", "mysql -u root -proot -e 'SELECT 1 FROM springboot.user LIMIT 1;' || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,7 +29,7 @@ services:
     ports:
       - 8080:80
     depends_on:
-      - db
+      - mysql
     networks:
       - app-net
 
@@ -37,10 +39,10 @@ services:
     image: leos51/api:latest
     container_name: spring-api
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/springboot
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springboot
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
