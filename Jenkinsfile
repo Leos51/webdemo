@@ -10,11 +10,11 @@ pipeline {
         jdk 'JDK21'
     }
     stages {
-//         stage('Clean workspace') {
-//             steps {
-//                 clearWs()
-//             }
-//         }
+        stage('Clean workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Git Checkout') {
             steps {
                 script {
@@ -22,7 +22,6 @@ pipeline {
                        credentialsId: 'jenkins-ci-token',
                        url: 'https://github.com/Leos51/webdemo.git'
                        echo 'checkout'
-        //             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'https://github.com/Leos51/webdemo']])
                 }
             }
         }
@@ -30,6 +29,11 @@ pipeline {
             steps {
                bat 'mvn clean package'
                echo 'build maven'
+            }
+        }
+        stage('Generate allure Report') {
+            steps {
+                bat 'mvn allure:report'
             }
         }
         stage('Build Docker Image') {
@@ -56,6 +60,17 @@ pipeline {
                     bat 'docker compose up -d --build --force-recreate --remove-orphans'
                 }
             }
+        }
+    }
+    post {
+        always {
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+            ])
         }
     }
 }
