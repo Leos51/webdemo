@@ -40,12 +40,13 @@ services:
     ports:
       - "8081:8080"
     networks:
-      - app-network
+      - app-net
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/persons" ]
       interval: 30s
       timeout: 10s
       retries: 3
+
   # Application Web
   web:
     image: leos51/webdemo:latest
@@ -58,11 +59,11 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - app-network
+      - app-net
 
 
 volumes:
   mysql-data:
 networks:
-  app-network:
+  app-net:
     driver: bridge
