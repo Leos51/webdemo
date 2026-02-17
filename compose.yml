@@ -7,7 +7,7 @@ services:
       MYSQL_DATABASE: springboot
 
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - mysql-data:/var/lib/mysql
       - ./infra/mysql/dump/script.sql:/docker-entrypoint-initdb.d/init.sql
@@ -23,11 +23,11 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
-      PMA_HOST: db
+      PMA_HOST: mysql
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - 8080:80
+      - 8082:80
     depends_on:
       - mysql
     networks:
@@ -65,7 +65,7 @@ services:
     environment:
       API_URL: http://api:9090
     ports:
-      - "8080:8080"
+      - "8083:8080"
     networks:
       - app-net
 
