@@ -71,7 +71,6 @@ services:
     networks:
       - frontend-net
 
-
 volumes:
   mysql-data:
 networks:
