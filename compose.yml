@@ -15,7 +15,7 @@ services:
     networks:
       - backend-net
     healthcheck:
-      test: [ "CMD-SHELL", "mysql -u ${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1 FROM springboot.user LIMIT 1;' || exit 1" ]
+      test: ["CMD-SHELL", "mysqladmin ping -proot --silent"]
       interval: 10s
       timeout: 5s
       retries: 5
