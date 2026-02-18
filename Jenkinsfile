@@ -73,14 +73,14 @@ pipeline {
             ])
         }
         success {
-            discordSend description: 'PipelineCI/CD AppWeb réussie',
+            discordSend description: 'Pipeline CI/CD AppWeb réussie',
                 result: 'SUCCESS', title: 'AppWeb CI/CD Pipeline',
-                webhookURL: 'https://discordapp.com/api/webhooks/1473618206441869403/u-F3T-loXSh00iScapJdA3ZENWbC50bQe57Av9UuhhYBh0KZr3U-TAV6koIS9Ols1puj'
+                webhookURL: 'DISCORD_WEBHOOK_URL'
         }
         failure {
-            discordSend description: 'PipelineCI/CD AppWeb a echoué',
+            discordSend description: 'Pipeline CI/CD AppWeb a echoué',
                 result: 'FAILURE', title: 'AppWeb CI/CD Pipeline',
-                webhookURL: 'https://discordapp.com/api/webhooks/1473618206441869403/u-F3T-loXSh00iScapJdA3ZENWbC50bQe57Av9UuhhYBh0KZr3U-TAV6koIS9Ols1puj'
+                webhookURL: 'DISCORD_WEBHOOK_URL'
         }
     }
 }
