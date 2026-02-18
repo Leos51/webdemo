@@ -76,7 +76,7 @@ pipeline {
             withCredentials([string(credentialsId: 'discord-webhook-appweb', variable: 'DISCORD_WEBHOOK_SUCCESS')]) {
                 discordSend description: 'Pipeline CI/CD AppWeb réussie',
                     result: 'SUCCESS', title: 'AppWeb CI/CD Pipeline',
-                    webhookURL: ${DISCORD_WEBHOOK_SUCCESS}
+                    webhookURL: "${DISCORD_WEBHOOK_SUCCESS}"
             }
 
         }
@@ -84,7 +84,7 @@ pipeline {
             withCredentials([string(credentialsId: 'discord-webhook-appweb', variable: 'DISCORD_WEBHOOK_FAILURE')]) {
                 discordSend description: 'Pipeline CI/CD AppWeb a echoué',
                     result: 'FAILURE', title: 'AppWeb CI/CD Pipeline',
-                    webhookURL: ${DISCORD_WEBHOOK_FAILURE}
+                    webhookURL: "${DISCORD_WEBHOOK_FAILURE}"
             }
 
         }
