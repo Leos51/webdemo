@@ -9,9 +9,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- Données de test
 INSERT INTO `user` (firstname, lastname) VALUES
+                                             ('Script', 'Dump'),
                                              ('Alice', 'THORNTON'),
                                              ('Lance', 'RIDDLE'),
                                              ('Brandon', 'HUTTINS'),
                                              ('Bob', 'MARTIN');
 
 SELECT 'Database initialized with test data!' AS Status;
+webdemwww

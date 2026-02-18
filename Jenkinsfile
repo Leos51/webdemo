@@ -72,5 +72,15 @@ pipeline {
                 results: [[path: 'target/allure-results']]
             ])
         }
+        success {
+            discordSend description: 'PipelineCI/CD AppWeb réussie',
+                result: 'SUCCESS', title: 'AppWeb CI/CD Pipeline',
+                webhookURL: 'https://discordapp.com/api/webhooks/1473618206441869403/u-F3T-loXSh00iScapJdA3ZENWbC50bQe57Av9UuhhYBh0KZr3U-TAV6koIS9Ols1puj'
+        }
+        failure {
+            discordSend description: 'PipelineCI/CD AppWeb a echoué',
+                result: 'FAILURE', title: 'AppWeb CI/CD Pipeline',
+                webhookURL: 'https://discordapp.com/api/webhooks/1473618206441869403/u-F3T-loXSh00iScapJdA3ZENWbC50bQe57Av9UuhhYBh0KZr3U-TAV6koIS9Ols1puj'
+        }
     }
 }
