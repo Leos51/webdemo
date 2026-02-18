@@ -20,9 +20,11 @@
 #
 ## Lancer le JAR Spring Boot directement
 #ENTRYPOINT ["java", "-jar", "app.jar"]
-FROM openjdk:21
+FROM eclipse-temurin:21-jre
 ENV APP_HOME=/app
-EXPOSE 9001
 WORKDIR $APP_HOME
-COPY target/*jar /app/app.jar
-CMD ["java", "-jar", "app.jar"]
+
+COPY target/*.jar app.jar
+
+EXPOSE 9001
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
