@@ -11,7 +11,7 @@ services:
     volumes:
       - ${MYSQL_DATA_DIR}:/var/lib/mysql
       - ${LOG_DIR_MYSQL}:/var/log/mysql
-      - ${ MYSQL_DUMP_DIR }/script.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${MYSQL_DUMP_DIR}/script.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - backend-net
     healthcheck:
